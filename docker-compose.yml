@@ -12,9 +12,7 @@ services:
       - static_volume:/app/static
     expose:
       - "8000"
-    environment:
-      - DEBUG=False
-      - DJANGO_SETTINGS_MODULE=mmc.settings
+
 
   nginx:
     image: nginx:latest
