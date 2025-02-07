@@ -12,13 +12,15 @@ services:
     volumes:
       - .:/app
       - static_volume:/app/static
-      - ./sqlite_db:/app/db.sqlite3  # Храним SQLite в папке
-      - media_volume:/app/media  # Храним медиа-файлы
+      - ./sqlite_db:/app/sqlite_db  # Changed path
+      - media_volume:/app/media
     expose:
       - "8000"
     environment:
       - DEBUG=False
       - DJANGO_SETTINGS_MODULE=core.settings
+      # Add these environment variables for database path
+      - SQLITE_DB_DIR=/app/sqlite_db
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000"]
       interval: 10s

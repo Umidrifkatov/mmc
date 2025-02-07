@@ -12,3 +12,4 @@ sudo ufw allow 443
 
 docker-compose down --volumes --rmi all
 docker system prune -af
+docker-compose down --volumes --remove-orphans
