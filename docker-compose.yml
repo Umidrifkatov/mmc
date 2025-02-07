@@ -6,21 +6,24 @@ services:
     command: >
       sh -c "python manage.py migrate &&
              python manage.py collectstatic --noinput &&
-             python manage.py createsuperuser --noinput || true &&
+             echo \"from django.contrib.auth import get_user_model; \
+             User = get_user_model(); \
+             User.objects.filter(username='admin').exists() or \
+             User.objects.create_superuser('admin', 'admin@example.com', 'adminpass')\" | python manage.py shell &&
              gunicorn core.wsgi:application --bind 0.0.0.0:8000"
     volumes:
       - .:/app
       - static_volume:/app/static
-      - ./sqlite_db:/app/db  # Храним базу вне контейнера
-      - ./media_volume:/app/media  # Храним медиа файлы вне контейнера
+      - ./sqlite_db:/app/db.sqlite3  # Храним SQLite вне контейнера
+      - media_volume:/app/media  # Храним медиа файлы вне контейнера
     expose:
       - "8000"
     environment:
       - DEBUG=False
       - DJANGO_SETTINGS_MODULE=core.settings
-      - DJANGO_SUPERUSER_USERNAME: admin
-      - DJANGO_SUPERUSER_EMAIL: admin@example.com
-      - DJANGO_SUPERUSER_PASSWORD: adminpass
+      - DJANGO_SUPERUSER_USERNAME=admin
+      - DJANGO_SUPERUSER_EMAIL=admin@example.com
+      - DJANGO_SUPERUSER_PASSWORD=adminpass
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000"]
       interval: 10s
@@ -41,3 +44,4 @@ services:
 
 volumes:
   static_volume:
+  media_volume:
