@@ -12,16 +12,20 @@ services:
     volumes:
       - .:/app
       - static_volume:/app/static
-      - ./sqlite_db:/app/sqlite_db  # Changed path
+      - ./sqlite_db:/app/sqlite_db
       - media_volume:/app/media
     expose:
       - "8000"
     environment:
       - DEBUG=False
       - DJANGO_SETTINGS_MODULE=core.settings
-      # Add these environment variables for database path
       - SQLITE_DB_DIR=/app/sqlite_db
-
+    healthcheck:
+      test: curl --fail http://localhost:8000 || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
   nginx:
     image: nginx:latest
