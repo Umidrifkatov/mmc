@@ -8,6 +8,7 @@ __pycache__/
 venv/
 .env
 *.env
+env/
 
 # Django
 *.log
@@ -19,10 +20,7 @@ local_settings.py
 staticfiles/
 media/
 
-# Migrations (optional, если не хотите отслеживать их в Git)
-**/migrations/*.pyc
-**/migrations/*.py
-!**/migrations/__init__.py
+
 
 # IDEs и редакторы кода
 .vscode/
@@ -46,10 +44,9 @@ docker-compose.override.yml
 
 *__init__.py
 
-env/
 
 
-migrations/
+
 
 
 db.sqlite3
