@@ -21,11 +21,7 @@ services:
       - DJANGO_SETTINGS_MODULE=core.settings
       # Add these environment variables for database path
       - SQLITE_DB_DIR=/app/sqlite_db
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+
 
   nginx:
     image: nginx:latest
