@@ -14,7 +14,7 @@ services:
       - "8000"
     environment:
       - DEBUG=False
-      - DJANGO_SETTINGS_MODULE=myproject.settings
+      - DJANGO_SETTINGS_MODULE=core.settings
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000"]
       interval: 10s
